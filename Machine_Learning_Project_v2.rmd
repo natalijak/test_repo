@@ -44,8 +44,8 @@ training <-   training[, colSums(is.na(training)) == 0]
 ```
 
 ```{r, echo=TRUE}
-trainData <- training[, -c(1:7)]
-testData <- testing[, -c(1:7)]
+trainData1 <- training[, -c(1:7)]
+testData1 <- testing[, -c(1:7)]
             
 ```
 ###Spliting
@@ -62,9 +62,9 @@ library(caret)
 ```{r, echo=TRUE}
 
 set.seed(8000) 
-inTrain <- createDataPartition(trainData$classe, p = 0.7, list = FALSE)
-train <- trainData[inTrain, ]
-valid <- trainData[-inTrain, ]
+inTrain <- createDataPartition(trainData1$classe, p = 0.7, list = FALSE)
+train <- trainData1[inTrain, ]
+valid <- trainData1[-inTrain, ]
 
 ```
 ###Prediction Algorithms (classification trees and random forests) for prediciton of the outcome.
@@ -121,7 +121,7 @@ The accuracy rate is 0.49. Use of classification tree is suboptimal
 fit_rf <- train(classe ~ ., data = train, method = "rf", trControl = control)
 print(fit_rf, digits = 4)
 ```
-### prediction of outcomes using validation set
+###Prediction of outcomes using validation set
 ```{r, echo=TRUE}
 predict_rf <- predict(fit_rf, valid)
 # prediction result
@@ -131,10 +131,11 @@ predict_rf <- predict(fit_rf, valid)
 (accuracy_rf <- conf_rf$overall[1])
 ```
 Very high Accuracy achieved with Random Forest, 99.42%
+
 ###Use random forests to predict the outcome variable classe for the testing set which are in fact the answers for the quiz.
 
 ```{r, echo=TRUE}
-(predict(fit_rf, testData))
+(predict(fit_rf, testData1))
 ```
 
 
